@@ -1,0 +1,3 @@
+﻿cd Users/lucas/Google\ Drive/UNIFESP/EC/9º\ Termo/LComp/Compilador/
+make
+./c- nome_do_arquivo_teste.txt

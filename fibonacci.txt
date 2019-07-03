@@ -1,0 +1,25 @@
+/* programa para calcular a sequencia de fibonacci. */
+
+void main(void)
+{
+  /*Declaracao de variaveis.*/
+  int a; int b; int auxiliar; int i; int n;
+ 
+  /*Aqui foi necessario atribuir valores as variaveis a e b.*/
+  a = 0;
+  b = 1;
+  i = 0;
+ 
+  n = input();
+
+  output(n);
+ 
+  /*Com a estrutura de controle while() gero a sequencia.*/
+  while(i < n){
+    auxiliar = a + b;
+    a = b;
+    b = auxiliar;
+    i = i + 1;
+    output(auxiliar);
+  }
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        

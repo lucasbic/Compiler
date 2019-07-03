@@ -1,0 +1,52 @@
+/* gdc com 7 erros semanticos*/
+
+/* teste de funcao com parametros e corpo sem declaracoes */
+int gdc (int u, int v)
+{
+    /* teste de selecao, expressoes, return e chamada de funcao */
+    if (v == 0) return u; 
+    else return gdc(v,u-u/v*v);
+}
+
+/* teste de funcao sem parametros e sem corpo */
+int input(void)
+{
+}
+
+/* teste de funcao com parametro e sem corpo */
+void output(int x)
+{
+}
+
+/* teste de funcao sem parametro e com corpo completo */
+void mainDif(void) /* erro semantico - sem main */
+{
+
+   /* teste de diferentes tipos de variaveis, incluindo vetor */
+   int input; /* erro semantico - nome duplicado com de funçao */
+   int x;
+   int y;
+   void a; /* erro semantico - nao pode declarar como void*/
+   int v[10];
+   int y; /* erro semantico - declarao dupla*/  
+
+   /* chamadas de funcoes */
+   x = output(x); /* erro semantico: valor de retorno de funcao  void */
+   x = input();
+   y = input();
+   outteste(gdc(x,y)); /* erro semantico: chamada de funçao nao declarada */
+
+   /* teste atribuicao e repeticao */
+   u = 0; /* erro semantico: variavel nao declarada */
+   x = 1;
+   while (x <= 10)
+   {
+      u = u + 1;  
+      v[i] = u;
+      x = x + 1; 
+   }
+
+   /* teste return simples */   
+   return;
+
+}

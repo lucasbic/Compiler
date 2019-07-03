@@ -1,0 +1,21 @@
+int teste (int u)
+{
+	output(u);
+	return u;
+}
+
+
+void main(void)
+{	int x; int y;
+	x = 2;
+	y = 3;
+	if (x == 2)
+	{
+		input();
+		output(teste(x));
+	}
+	else{
+		input();
+		output(teste(y));	
+	}
+}                                                                                                    
