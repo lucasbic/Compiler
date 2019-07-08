@@ -1,8 +1,0 @@
-geraCodigoFuncao -> createEscopoGerador -> st_bucket_func -> 
-
-Problemas: funções do symtab.c com problemas
-
-getMemoryLocation (retorna h)
-getTamanhoBlocoMemoriaEscopoGlobal (retorna tamanho)
-
-printCode(insertObjInst(createObjInst(_LOAD, TYPE_I, rs, getStackOperandLocation(op), NULL)));
