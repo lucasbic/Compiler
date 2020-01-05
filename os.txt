@@ -1,0 +1,178 @@
+/* 	Arquivo os.c
+	Sistema Operacional implementado para a UC de Lab de SO
+	Autor: Lucas Bicalho*/
+
+/* variáveis globais */
+
+/* ID dos programas */
+int progid[2];
+
+/* estado dos programas (1: concluído; 0: pronto) */
+int progestado[2];
+
+/* fila de execução dos programas */
+int progfila[2];
+
+/* PC dos programas */
+int progpc[2];
+
+/* posição de início e fim dos programas no HD */
+int proginicio[2];
+int progfim[2];
+
+
+/*void findRegs(int prog){
+
+}
+
+void saveRegs(void){
+
+}*/
+
+/*void execProg(int prog){
+	int prog;
+
+	saveRegs();
+	
+	findRegs(prog);
+
+
+}*/
+
+/*int rrobin (int u, int v){       
+	execProg(prog);
+}*/
+
+void execUmProg(void){
+	int prog;
+
+	prog = input();
+	/*execProg(prog);*/
+}
+
+void execNProgs(void){
+	/*int prog;*/
+	int finishProg;
+	int estProgUm;
+	int estProgDois;
+	int prog;
+
+	estProgUm = 0;
+	estProgDois = 0;
+	prog = 1;
+	finishProg = 0;
+
+	/*prog = input();*/
+
+	/*rrobin();*/
+
+	while(finishProg == 0){
+		if (prog > 2)
+		{
+			prog =  1;
+		}
+
+		setPr(prog);
+		runPr(proginicio[prog-1]);	/*jump para o inicio do programa*/
+		/*retorno para o SO quando programa finaliza*/
+
+		if (prog == 1)
+		{
+			estProgUm = 1;
+		}
+		if (prog == 2)
+		{
+			estProgDois = 1;
+		}
+		
+		/*retorno para o SO quando programa não finalizou*/
+		setSO();
+		prog = prog + 1;
+
+		if(estProgUm == 1){
+			if (estProgDois == 1)
+			{
+				finishProg = 1;
+			}
+		}
+	}
+}
+
+void renProg(void){
+	int prog;
+	int name;
+
+	prog = input();
+	name = input();
+	
+}
+
+void newProg(void){
+	
+}
+
+void delProg(void){
+	int prog;
+
+	prog = input();
+}
+
+
+void prompt(int option){
+	if (option == 1)
+	{
+		execUmProg();	/* Executar 1 programa */
+	}
+	else if (option == 2)
+	{
+		execNProgs();	/* Executar N programas */
+	}
+	else if (option == 3)
+	{
+		renProg();		/* Renomear um programa */
+	}
+	else if (option == 4)
+	{
+		newProg();		/* Criar um novo programa */
+	}
+	else if (option == 5)
+	{
+		delProg();		/* Deletar um programa */
+	}
+	else
+	{
+		output(0);		/* Opção inválida */
+	}
+}
+
+void main(void){
+	
+	int in;
+	int i; i = 0;
+	
+    /* inicialização dos vetores de posição dos programas no HD */
+    /* PROGRAMA 0: (colocar nome do programa) */
+    proginicio[0] = 500;
+    progfim[0] = 541;
+
+    /* PROGRAMA 1: (colocar nome do programa) */
+    proginicio[1] = 542;
+    progfim[1] = 578;
+
+    /* inicialização dos vetores de ID e de PC dos programas */
+    while (i < 2) {
+        progid[i] = i;
+        progpc[i] = proginicio[i];
+        i = i + 1;
+    }
+
+	in = input();
+	
+	while(in > 0){
+		prompt(in);
+
+		in = input();
+	}
+	
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        

@@ -122,8 +122,10 @@ static void insertNode( TreeNode * t){
 
                 case IdFunctionK:
                     t->escopo = current_scope;
-                    if (st_lookup(t->attr.name, "global") == -1 && st_lookup(t->attr.name, "") == -1 &&
-                        strcmp(t->attr.name, "input") != 0 && strcmp(t->attr.name, "output") != 0){
+                    if ((st_lookup(t->attr.name, "global") == -1) && (st_lookup(t->attr.name, "") == -1) &&
+                        (strcmp(t->attr.name, "input") != 0) && (strcmp(t->attr.name, "output") != 0) &&
+                        (strcmp(t->attr.name, "setSO") != 0) && (strcmp(t->attr.name, "setPr") != 0) &&
+                        (strcmp(t->attr.name, "runPr") != 0) && (strcmp(t->attr.name, "retPr") != 0)){
                         /* not yet in table, so treat as new definition */
                         typeError(t,"Error 5: Chamada de Funcao nao declarada");
                     }

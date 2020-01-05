@@ -56,7 +56,7 @@ const char * toStringOpcode(Opcode op) {
 		"and", "or", "not", "xor", "shl", "shr",
 		"beq", "bne", "ble", "bgr", "slt", "jump", "jr", "jal",
 		"nop", "halt",  "load", "str", "li", "move",
-		"in", "out"
+		"in", "out", "setso", "setpr", "trgpc"
     };
     return strings[op];
 }
@@ -75,10 +75,19 @@ InstOperand getTempReg(int i) {
     /* Se ja tiver usado todos registradores temporarios volta a usar do inicio sem fazer nenhuma
      * verificacao adicional, pois os registradores temporarios nao garantem persistencia dos dados
      */
-    if(i > 9) {
+    if(i > 7) {
         escopoHead->tempRegCount = 0;
         i = 0;
     }
+    InstOperand operando = (InstOperand) malloc(sizeof(struct instOperand));
+    operando->tipoEnderecamento = REGISTRADOR;
+    operando->enderecamento.registrador = tempReg[i];
+    return operando;
+}
+
+InstOperand getLastTempReg(int i) {
+    /* Usa o reg temporario $t9 para armazenar o contexto
+     */
     InstOperand operando = (InstOperand) malloc(sizeof(struct instOperand));
     operando->tipoEnderecamento = REGISTRADOR;
     operando->enderecamento.registrador = tempReg[i];
@@ -147,6 +156,16 @@ InstOperand getGlobalOperandLocation(Operand op) {
     operando->tipoEnderecamento = INDEXADO;
     operando->enderecamento.indexado.offset = offset;
     operando->enderecamento.indexado.registrador = $gp;
+    return operando;
+}
+
+InstOperand getProgOperandLocation(Operand op) {
+    int offset = getMemoryLocation(op.contents.variable.name, op.contents.variable.scope);
+    // Operando que representa o modo de enderecamento indexado
+    InstOperand operando = (InstOperand) malloc(sizeof(struct instOperand));
+    operando->tipoEnderecamento = INDEXADO;
+    operando->enderecamento.indexado.offset = offset;
+    operando->enderecamento.indexado.registrador = $t9;
     return operando;
 }
 
@@ -226,6 +245,14 @@ InstOperand getTempRegName(Operand op) {
     InstOperand reg;
     // Cria registrador temporario para armazenar o resultado da expressao
     reg = getTempReg(escopoHead->tempRegCount++);
+    insertRegistrador(createRegistrador(op, reg->enderecamento.registrador));
+    return reg;
+}
+
+InstOperand getTempRegNameOut(Operand op) {
+    InstOperand reg;
+    // Cria registrador temporario para armazenar o resultado da expressao
+    reg = getTempReg(escopoHead->tempRegCount--);
     insertRegistrador(createRegistrador(op, reg->enderecamento.registrador));
     return reg;
 }
@@ -320,9 +347,25 @@ void geraCodigoChamadaFuncao(Quadruple q) {
      */
     if(!strcmp(q->op1.contents.variable.name, "input")) {
         printCode(insertObjInst(createObjInst(_IN, _INF, TYPE_IO, getTempRegName(q->op3), NULL, NULL)));
+        printCode(insertObjInst(createObjInst(_TRGPC, _TRGPCF, TYPE_I, NULL, NULL, NULL)));
     } else if(!strcmp(q->op1.contents.variable.name, "output")) {
-        printCode(insertObjInst(createObjInst(_OUT, _OUTF, TYPE_IO, rtnValReg, NULL, getImediato(q->display))));
-    } else if(!strcmp(escopoHead->nome, "main")) {
+        printCode(insertObjInst(createObjInst(_OUT, _OUTF, TYPE_IO, getTempRegNameOut(q->op3), NULL, getImediato(q->display))));
+        printCode(insertObjInst(createObjInst(_TRGPC, _TRGPCF, TYPE_I, NULL, NULL, NULL)));
+    } else if(!strcmp(q->op1.contents.variable.name, "setSO")) {
+        printCode(insertObjInst(createObjInst(_LI, _LIF, TYPE_I, getLastTempReg(9), getImediato(q->display), NULL))); //arrumar imediato
+        printCode(insertObjInst(createObjInst(_SETSO, _SETSOF, TYPE_I, NULL, NULL, NULL)));
+    } else if(!strcmp(q->op1.contents.variable.name, "setPr")) {
+        printCode(insertObjInst(createObjInst(_LI, _LIF, TYPE_I, getLastTempReg(9), getImediato(q->display), NULL))); //arrumar imediato
+        printCode(insertObjInst(createObjInst(_SETPR, _SETPRF, TYPE_I, NULL, NULL, NULL)));
+    } else if(!strcmp(q->op1.contents.variable.name, "runPr")) {
+        printCode(insertObjInst(createObjInst(_JUMP, _JUMPF, TYPE_J, getOperandLabel(q->op1.contents.variable.name), NULL, NULL)));
+    } else if(!strcmp(q->op1.contents.variable.name, "retPr")) {
+        printCode(insertObjInst(createObjInst(_JR, _JRF, TYPE_I,  NULL, getLastTempReg(8), NULL)));
+    } /*else if(!strcmp(q->op1.contents.variable.name, "findRegs")) {
+        printCode(insertObjInst(createObjInst(_FREG, _FREGF, TYPE_IO, getTempRegName(q->op3), NULL, getImediato(q->display))));
+    } else if(!strcmp(q->op1.contents.variable.name, "saveRegs")) {
+        printCode(insertObjInst(createObjInst(_SREG, _SREGF, TYPE_IO, getTempRegName(q->op3), NULL, getImediato(q->display))));
+    }*/ else if(!strcmp(escopoHead->nome, "main")) {
         tamanhoBlocoMemoria = getTamanhoBlocoMemoriaEscopo(q->op1.contents.variable.name);
         printCode(insertObjInst(createObjInst(_JAL, _JALF, TYPE_J, getOperandLabel(q->op1.contents.variable.name), NULL, NULL)));
         printCode(insertObjInst(createObjInst(_MOVE, _MOVEF, TYPE_I, getTempRegName(q->op3), rtnValReg, NULL)));

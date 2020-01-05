@@ -18,7 +18,7 @@ typedef enum{Empty, IntConst, String} OperandKind;
 typedef enum instrucao {ADD, SUB, MULT, DIV, VEC, 
 						EQL, NE, LTN, LET, GTN, GET, ASNG,
 						FUNC, RET, PARAM, CALL, ARGS,
-						JPF, GOTO, LBL, HALT, VEC_ADDR, GET_PARAM, SET_PARAM, IN, OUT} InstructionKind;
+						JPF, GOTO, LBL, HALT, VEC_ADDR, GET_PARAM, SET_PARAM, IN, OUT, SETSO, SETPR} InstructionKind;
 
 typedef struct{
 	OperandKind kind;

@@ -13,13 +13,13 @@ typedef enum opcode { _ADD, _SUB, _MULT, _DIV, _INC, _DEC, _ADDI, _SUBI,
 				      _AND, _OR, _NOT, _XOR, _SHL, SHR,
 				      _BEQ, _BNE, _BLE, _BGR, _SLT, _JUMP, _JR, _JAL,
 				      _NOP, _HALT, _LOAD, _STR, _LI, _MOVE,
-				      _IN, _OUT} Opcode;
+				      _IN, _OUT, _SETSO, _SETPR, _TRGPC} Opcode;
 
 typedef enum funct { _ADDF, _SUBF, _MULTF, _DIVF, _INCF, _DECF, _ADDIF, _SUBIF,
                       _ANDF, _ORF, _NOTF, _XORF, _SHLF, SHRF,
                       _BEQF, _BNEF, _BLEF, _BGRF, _SLTF, _JUMPF, _JRF, _JALF,
                       _NOPF, _HALTF, _LOADF, _STRF, _LIF, _MOVEF,
-                      _INF, _OUTF} Funct;
+                      _INF, _OUTF, _SETSOF, _SETPRF, _TRGPCF} Funct;
 
 /**
  *opcode_map mapeia todas posicoes dos enums de opcode, e utilizado para
@@ -29,7 +29,7 @@ static const enum opcode opcode_map[] = { _ADD, _SUB, _MULT, _DIV, _INC, _DEC, _
 									      _AND, _OR, _NOT, _XOR, _SHL, SHR,
 									      _BEQ, _BNE, _BLE, _BGR, _SLT, _JUMP, _JR, _JAL,
 									      _NOP, _HALT, _LOAD, _STR, _LI, _MOVE,
-									      _IN, _OUT};
+									      _IN, _OUT, _SETSO, _SETPR, _TRGPC};
 
 /**
  *funct_map mapeia todas posicoes dos enums de funct, e utilizado para
@@ -39,7 +39,7 @@ static const enum funct funct_map[] = { _ADDF, _SUBF, _MULTF, _DIVF, _INCF, _DEC
                                         _ANDF, _ORF, _NOTF, _XORF, _SHLF, SHRF,
                                         _BEQF, _BNEF, _BLEF, _BGRF, _SLTF, _JUMPF, _JRF, _JALF,
                                         _NOPF, _HALTF, _LOADF, _STRF, _LIF, _MOVEF,
-                                        _INF, _OUTF};
+                                        _INF, _OUTF, _SETSOF, _SETPRF, _TRGPCF};
 
 typedef enum type {
     TYPE_R, TYPE_I, TYPE_J, TYPE_IO

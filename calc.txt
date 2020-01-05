@@ -1,0 +1,28 @@
+
+
+
+
+void main(void){
+    int a; int b; int op;
+    a = input(); b = input(); op = input();
+
+    if (op == 1){ 
+        output(a+b);
+    }
+    if (op == 2){ 
+        output(a-b);
+    }
+    if (op == 3){ 
+        output(a*b);
+    }
+    if (op == 4){ 
+        output(a/b);
+    }
+    if (op == 5){ 
+        output(a-a/b*b); /* mod(a,b) */
+    }
+    if (op == 6){ 
+        output(a*b/100); /* porcentagem(a,b) */
+    }
+
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
